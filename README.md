@@ -8,6 +8,14 @@ El modo guardia recopila 30 imágenes por ciclo (10 entre 06–12, 10 entre 12�
 
 **Android TV 2.3** conserva su propia implementación. El entrenamiento neuronal y el modo guardia descriptos aquí son de Windows.
 
+## Descargar para usar
+
+En [Releases · Windows 2.8](https://github.com/javierssj22/visor-ip/releases/tag/v2.8.0), descargar **Visor-IP-2.8.0-Windows-x64.zip**.
+
+Extraer todo el ZIP, abrir la carpeta **Visor IP** y ejecutar **Visor IP.exe**. Incluye .NET, VLC, modelos y entrenamiento local: no hace falta instalar Python ni compilar. Conservar todas las carpetas. La primera vez hay que ingresar la red y las credenciales de las cámaras; no se distribuyen configuraciones personales.
+
+Los enlaces **Source code** son para desarrolladores, no el programa listo para ejecutar. La descarga está pensada para Windows de 64 bits con acceso a la red de las cámaras.
+
 ## Código y datos
 
 | Carpeta | Contenido |
@@ -19,7 +27,7 @@ El modo guardia recopila 30 imágenes por ciclo (10 entre 06–12, 10 entre 12�
 | `scripts` | Preparación y compilación |
 | `docs` | Uso y limitaciones |
 
-El repositorio contiene código, no una copia de las cámaras configuradas. No incluye capturas, contraseñas, modelos personales, claves de firma, ejecutables ni dependencias descargadas. Los binarios futuros deben distribuirse por Releases, después de una revisión independiente de su contenido.
+El repositorio contiene código, no una copia de las cámaras configuradas. No incluye capturas, contraseñas, modelos personales, claves de firma, ejecutables ni dependencias descargadas. El programa listo para ejecutar se distribuye por Releases, con una revisión separada del contenido de cada paquete.
 
 ## Compilar Windows
 
