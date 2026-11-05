@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PlatformTarget>x64</PlatformTarget>
+    <AssemblyName>Visor IP</AssemblyName>
+    <Version>2.8.0</Version>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <SelfContained>false</SelfContained>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <RestoreIgnoreFailedSources>true</RestoreIgnoreFailedSources>
+    <AiAssetsDirectory>$(MSBuildThisFileDirectory)..\ai</AiAssetsDirectory>
+    <AiAssetsDirectory Condition="!Exists('$(AiAssetsDirectory)\yolox_tiny.onnx')">$(MSBuildThisFileDirectory)..\ia</AiAssetsDirectory>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.31.0" />
+    <Content Include="$(AiAssetsDirectory)\yolox_*.onnx" Link="ia\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="$(AiAssetsDirectory)\*-LICENSE.txt" Link="ia\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

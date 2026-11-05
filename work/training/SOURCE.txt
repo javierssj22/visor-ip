@@ -1,0 +1,4 @@
+YOLOX Apache-2.0, upstream commit 6ddff4824372906469a7fae2dc3206c7aa4bbaee
+Minimal model/loss subset; utils includes only required box functions. No CUDA trainer.
+https://raw.githubusercontent.com/Megvii-BaseDetection/YOLOX/6ddff4824372906469a7fae2dc3206c7aa4bbaee/
+Weights: official 0.1.1rc0/yolox_s.pth

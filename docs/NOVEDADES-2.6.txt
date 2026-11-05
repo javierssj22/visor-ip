@@ -1,0 +1,89 @@
+VISOR IP 2.6 — APRENDIZAJE LOCAL CON TUS CAPTURAS
+
+USO
+Abrí IA local > Aprender con mis capturas.
+1. Guardar captura para revisar después: conserva una imagen de la cámara
+   seleccionada. No la usa como ejemplo negativo ni entrena con ella todavía.
+2. Revisar capturas pendientes: dibujá un recuadro alrededor de TODAS las
+   personas visibles. Si no hay ninguna, elegí Guardar sin personas.
+   Cancelar conserva la captura pendiente. Las revisa desde la más antigua.
+3. Guardar personas marcadas / Guardar sin personas incorpora la corrección.
+   También podés usar Corregir / guardar ejemplo para hacerlo en el momento.
+4. El automático espera 30 segundos desde la última corrección y trabaja en
+   segundo plano. Entrenar ahora / reintentar evita esa espera.
+
+EL ENTRENAMIENTO ES REAL
+A partir de 8 capturas distintas con personas y 4 sin personas, ajusta pesos
+de la cabeza de detección YOLOX-S: clasificación, presencia y recuadros, usando
+retropropagación y las pérdidas YOLOX. El extractor de características queda
+congelado para limitar el consumo en CPU. No parte de cero ni identifica a
+personas por su nombre: aprende a detectar la categoría persona.
+Cada sesión parte de los pesos preentrenados y usa las correcciones acumuladas,
+con una selección equilibrada de hasta 256 imágenes y cuatro vueltas.
+Las fotos duplicadas no aumentan el número de ejemplos. Etiquetas contradictorias
+en una misma foto detienen esa sesión y se muestran como error.
+
+APRENDER Y ACTIVAR SON DOS PASOS DISTINTOS
+Puede entrenar con 12 capturas, pero NO activa automáticamente ese resultado.
+Para validarlo requiere al menos 20 imágenes con personas y 20 sin personas,
+de varias secuencias separadas por pausas de 10 minutos para cada cámara.
+Las secuencias enteras se separan por hash: aproximadamente 75% entrenamiento
+y 25% validación. Se necesitan al menos 5 positivas y 5 negativas reservadas,
+10 de cada tipo para aprender, y todas las cámaras representadas en ambos.
+Por eso 40 fotos no garantizan que ya alcance: debe haber variedad de momentos.
+Las imágenes reservadas no se usan para aprender. Entrenar no consume ni borra
+las correcciones. Conviene incluir día, noche, distancias, ropa y fondos distintos.
+
+Compara el candidato con el detector elegido actualmente para cada cámara,
+a su umbral de confianza. Exige mejorar F1 al menos 0,02; precisión mínima 0,75;
+recuperación mínima 0,50; sin bajar precisión o recuperación más de 0,02 ni
+subir falsos avisos en imágenes vacías. Por cámara no admite bajar F1 más de
+0,03. Las cajas se cotejan a IoU 0,50. No es una garantía de precisión futura.
+Se valida la imagen completa; si usás una zona recortada, comprobá también su
+resultado en vivo. Cada encuadre y la visión nocturna pueden comportarse distinto.
+
+Sólo un candidato compatible, validado y mejor se instala como Aprendida en las
+cámaras corregidas, manteniendo su activación, confianza, intervalo y zona.
+Si cambiás de detector/confianza durante el entrenamiento, se conserva el actual
+y se pide una nueva comparación. Tampoco se reemplaza si faltan datos de una
+cámara que ya está usando el modelo Aprendido.
+Podés volver en cualquier momento a Precisa o Equilibrada desde IA local.
+El modo Personalizada sigue disponible para importar un ONNX externo compatible.
+
+PAUSA Y RENDIMIENTO
+Desmarcar Entrenar automáticamente pausa el proceso y la activación automática.
+Cerrar el visor cancela el trabajo en curso. Al reabrir puede reintentarlo con las
+correcciones guardadas. Una sesión fallida se reintenta con nuevas correcciones
+o con Entrenar ahora / reintentar; no entra en un bucle infinito.
+Usa un proceso de prioridad inactiva y un hilo de cálculo. Con muchos videos
+puede tardar varios minutos y aumentar el intervalo entre análisis. Cada sesión
+tiene un límite de dos horas. No requiere GPU NVIDIA ni conexión a Internet.
+La carpeta aprendizaje contiene Python portátil, PyTorch CPU, YOLOX y ONNX;
+ocupa aproximadamente 1,5 GB. Conservá esa carpeta junto al programa.
+
+DATOS Y RECUPERACIÓN
+Todo queda en esta PC. No se suben capturas ni se guardan credenciales en ellas.
+%LOCALAPPDATA%/Visor IP/entrenamiento: correcciones y etiquetas.
+%LOCALAPPDATA%/Visor IP/entrenamiento/pendientes: fotos aún sin revisar.
+%LOCALAPPDATA%/Visor IP/aprendizaje: opciones, informes y sesiones.
+%LOCALAPPDATA%/Visor IP/modelos/aprendido.onnx: modelo aprobado activo.
+aprendido.onnx.anterior: modelo aprobado previo, cuando existe.
+Se conservan como máximo los tres candidatos recientes; los informes y las
+fotos corregidas se conservan. Abrir capturas e informes abre la carpeta de datos.
+El modelo personal importado se conserva separado del modelo Aprendido.
+
+ESTADO DE ENTREGA
+Se probó un entrenamiento real y la compatibilidad ONNX/PyTorch/C#, con datos
+de prueba separados. Esas fotos y ese candidato NO se incluyen ni se instalan
+como modelo personal. Aún no se ha entrenado con tus cámaras: al preparar
+esta versión no había capturas corregidas guardadas en esta PC.
+No se puede medir mejora en tus cámaras hasta reunir y validar tus ejemplos.
+Windows actualizado; la APK de TV conserva su versión anterior.
+
+FUENTES Y RECONSTRUCCIÓN
+YOLOX: https://github.com/Megvii-BaseDetection/YOLOX (Apache-2.0).
+PyTorch CPU: https://pytorch.org/ (licencias dentro del runtime).
+Python: https://www.python.org/ (licencia dentro del runtime).
+Código Windows en codigo-fuente; entrenador y código YOLOX en aprendizaje.
+Compilar con .NET 8 para Windows x64 y conservar motor, ia y aprendizaje junto
+al ejecutable. DEPENDENCIAS.txt registra versiones de las bibliotecas incluidas.

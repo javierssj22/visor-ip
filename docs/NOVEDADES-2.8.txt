@@ -1,0 +1,97 @@
+VISOR IP 2.8 — MODO GUARDIA Y REVISIÓN DIARIA
+
+PARA LA PERSONA DE GUARDIA
+A las 23:30 aparece: «¿Quiere ayudar a reconocer personas?», con Sí y No.
+Si elige Sí, se muestran las imágenes una por una, grandes:
+- Mantener apretado el botón izquierdo y arrastrar alrededor de CADA persona.
+- Guardar marcas y seguir: guarda los recuadros y pasa a la siguiente imagen.
+- No hay personas: guarda un ejemplo sin personas y pasa a la siguiente.
+- Deshacer marca: quita el último recuadro.
+- Continuar más tarde: conserva lo respondido y sale sin contestar el resto.
+Si elige No o cierra el cartel, no se vuelve a insistir esa noche. Las imágenes
+siguen guardadas. También puede entrar desde el botón Ayudar con imágenes.
+No necesita abrir carpetas, exportar archivos ni configurar entrenamiento.
+
+HORARIOS Y CANTIDADES
+Se programan 30 capturas por ciclo de 24 horas:
+10 entre 06:00 y 12:00 (mediodía).
+10 entre 12:00 y 20:00.
+10 entre 20:00 y 06:00 del día siguiente.
+Cada franja se divide en 10 intervalos y se elige un momento aleatorio dentro
+de cada intervalo. El plan queda guardado; reiniciar no cambia los horarios.
+Se alternan las cámaras conectadas: 30 capturas totales, no 30 por cámara.
+Cada imagen corresponde a una cámara, no a todo el mosaico del monitor.
+Se conserva la fecha/hora real y la cámara de origen.
+Las capturas se toman aunque la IA no detecte personas o esté desactivada para
+esa cámara. Incluye escenas vacías y oportunidades de corregir omisiones.
+
+REVISIÓN A LAS 23:30 Y CRUCE DE MEDIANOCHE
+La franja nocturna termina a las 06:00. Para no mezclar imágenes futuras con
+una tanda todavía en curso, a las 23:30 se ofrece la última tanda pendiente
+cuyo ciclo ya terminó. Ejemplo: el ciclo que comienza el lunes a las 06:00
+termina el martes a las 06:00 y puede revisarse el martes a las 23:30.
+El primer día todavía puede no existir una tanda terminada para ofrecer.
+Si una tanda quedó incompleta, se muestra la cantidad real disponible.
+La revisión conserva el avance incluso si se cierra el visor o se reinicia.
+Las imágenes sin revisar no se usan para entrenar. Al terminar, las respuestas
+quedan disponibles para el aprendizaje y validación locales de la versión 2.6.
+
+DISPONIBILIDAD
+La PC debe estar encendida, el visor abierto y las cámaras conectadas.
+El programa no puede recuperar imágenes de períodos en que estuvo apagado.
+Si falta video, reintenta cada 10 segundos dentro del intervalo correspondiente;
+cuando ese intervalo termina, no lo rellena con una foto de otro horario.
+Al iniciar a mitad del día, las oportunidades anteriores quedan sin capturar.
+La captura diaria puede funcionar con el visor minimizado si VLC sigue
+reproduciendo las cámaras. Para analizar y mostrar alertas IA se mantiene la
+condición anterior de video visible. La invitación restaura el visor si está
+minimizado. Si hay otra pantalla de configuración abierta, espera a que cierre.
+Usa la fecha y hora de Windows. La invitación aparece una vez por fecha entre
+23:30 y medianoche, mientras el visor está abierto y existe una tanda pendiente.
+No instala una tarea del sistema ni despierta una computadora apagada.
+
+DATOS
+Las tandas se guardan separadas de las capturas por detección en:
+%LOCALAPPDATA%/Visor IP/rondas-diarias
+Las respuestas confirmadas pasan a:
+%LOCALAPPDATA%/Visor IP/entrenamiento
+Las imágenes de prueba de desarrollo no se copian a tus datos.
+Se permite acumular hasta 420 imágenes diarias sin revisar (14 tandas completas).
+Al llegar al límite se conservan todas y se pausa la recopilación hasta revisar.
+El modo diario viene activado al actualizar a 2.8. El guardado adicional por
+detecciones se desactiva inicialmente para evitar una bandeja de avisos repetidos;
+se puede volver a activar en IA local > Aprender con mis capturas.
+El entrenamiento automático conserva la elección anterior del usuario.
+
+ALERTA ROJA FIJA
+El borde ya no parpadea cada medio segundo. Permanece rojo entre análisis
+positivos. Un análisis válido sin personas, una desconexión, desactivar la IA,
+detener el video o un resultado inválido limpia el aviso. Además vence a los
+15 segundos si no hay una detección nueva, para no quedar rojo indefinidamente.
+Los recuadros sobre las personas siguen caducando en menos de un segundo;
+así el rojo no depende de dejar dibujado un recuadro en una posición vieja.
+Las alertas ONVIF de la cámara también se muestran en rojo fijo durante su aviso.
+
+OPTIMIZACIÓN
+Se mantiene un único trabajo de análisis/captura a la vez. Las tomas diarias
+reutilizan el motor de video y no necesitan ejecutar la red neuronal.
+El motor ONNX desactiva la espera activa de sus hilos entre inferencias.
+Se reducen las búsquedas de capturas y firmas de entrenamiento en disco a una
+vez cada 30 segundos, en lugar de repetirlas cada dos segundos.
+El borde ya no se repinta alternando de color diez veces por segundo.
+No se inicia un entrenamiento nuevo mientras está abierta la revisión diaria.
+Estas medidas limitan trabajo innecesario; no garantizan una velocidad fija
+con 16 cámaras ni convierten el seguimiento en video de todos los fotogramas.
+Referencia técnica: https://onnxruntime.ai/docs/performance/tune-performance/threading.html
+
+PRUEBAS
+Compilación Windows x64 sin advertencias ni errores.
+Simulación de fechas/medianoche y 30 horarios persistentes repartidos 10/10/10.
+Captura de 30 imágenes usando VLC real con IA desactivada, cartel Sí/No,
+revisión secuencial, positivos/negativos y continuación después de salir.
+Seis videos simultáneos con detección, borde fijo, recuadros, pantalla completa,
+caducidad, desconexión, reconexión y refresco de cinco minutos.
+Pruebas de entrenamiento local y de ONVIF/PTZ existentes.
+Son pruebas con videos y datos aislados; no una medición de precisión en tus
+cámaras ni una prueba de funcionamiento durante 24 horas continuas.
+La APK del televisor conserva su versión anterior; estos cambios son de Windows.

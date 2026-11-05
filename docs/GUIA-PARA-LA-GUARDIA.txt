@@ -1,0 +1,12 @@
+AYUDAR A RECONOCER PERSONAS
+
+1. A las 23:30, tocá Sí si podés ayudar. Si tocás No, podés seguir trabajando sin revisar.
+2. Mirá cada imagen. Si hay personas, dibujá un recuadro alrededor de cada una:
+   mantené apretado el botón izquierdo del mouse y arrastrá desde una esquina
+   hasta la esquina opuesta. Después tocá Guardar marcas y seguir.
+3. Si no hay ninguna persona, tocá No hay personas.
+4. Si te equivocaste al dibujar, tocá Deshacer marca.
+5. Podés salir con Continuar más tarde. Lo que respondiste queda guardado.
+
+También podés entrar desde Ayudar con imágenes, en la barra del visor.
+No hace falta tocar la configuración ni abrir carpetas.
